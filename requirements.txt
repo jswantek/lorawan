@@ -1,1 +1,1 @@
-pywaggle[all]
+pywaggle==0.55.0
