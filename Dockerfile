@@ -2,9 +2,11 @@
 #FROM python:3-buster
 FROM rakwireless/udp-packet-forwarder:v1
 
-RUN apt-get update -y && apt-get install -y \
+RUN apt-get update -y && apt-get install --no-install-recommends -y \
     python3 \
-    python3-pip
+    python3-pip \
+    python3-setuptools \
+    supervisor
 
 # put all of our apps code in /app
 WORKDIR /app
@@ -28,5 +30,9 @@ ENV BAND="US_902_928"
 ENV SERVER_HOST="127.0.0.1"
 ENV SERVER_PORT="1700"
 
+# this addes like 30 MBs.  i think we can live with that.
+RUN mkdir -p /var/log/supervisor
+COPY supervisord.conf .
 # define how to run our code
 # ENTRYPOINT ["python3", "main.py"]
+ENTRYPOINT ["/usr/bin/supervisord", "-c", "/app/supervisord.conf"]
