@@ -6,10 +6,10 @@ spec:
   selector:
     app: wes-lorawan-server
   ports:
-    - name: mqtt
-      protocol: TCP
-      port: 1700
-      targetPort: 1700
+    # - name: mqtt
+    #   protocol: UDP
+    #   port: 1700
+    #   targetPort: 1700
     - name: webui
       protocol: TCP
       port: 8080
@@ -34,8 +34,6 @@ spec:
       containers:
         - image: 10.31.81.1:5000/local/lorawan:latest
           name: wes-lorawan-server
-          ports:
-            - containerPort: 2947
           securityContext:
             privileged: true
           resources:
@@ -51,6 +49,7 @@ spec:
           volumeMounts:
             - name: sys
               # TODO: see if we can figure out a way to do /host/sys and modify code for that path
+              # TODO: narrow the scope to /sys/class/gpio to see if that works, to limit exposure
               mountPath: /sys
               mountPropagation: HostToContainer
               readOnly: false
