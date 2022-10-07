@@ -14,5 +14,7 @@ ENV BAND="US_902_928"
 
 # TODO: i think this is what will re-broadcast the data to our local server
 ## for upload to beehive (may want to specicify a port here too)
-ENV SERVER_HOST="127.0.0.1"
-ENV SERVER_PORT="1700"
+# ENV SERVER_HOST="127.0.0.1"
+# ENV SERVER_PORT="1700"
+ENV SERVER_HOST="wes-rabbitmq"
+ENV SERVER_PORT="1883"
