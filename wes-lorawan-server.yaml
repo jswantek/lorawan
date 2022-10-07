@@ -1,0 +1,72 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: wes-lorawan-server
+spec:
+  selector:
+    app: wes-lorawan-server
+  ports:
+    - name: mqtt
+      protocol: TCP
+      port: 1700
+      targetPort: 1700
+    - name: webui
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wes-lorawan-server
+spec:
+  selector:
+    matchLabels:
+      app: wes-lorawan-server
+  template:
+    metadata:
+      labels:
+        app: wes-lorawan-server
+    spec:
+      priorityClassName: wes-high-priority
+      nodeSelector:
+        resource.lorawan: "true"
+      containers:
+        - image: 10.31.81.1:5000/local/lorawan:latest
+          name: wes-lorawan-server
+          ports:
+            - containerPort: 2947
+          securityContext:
+            privileged: true
+          resources:
+            limits:
+              cpu: 50m
+              memory: 10Mi
+            requests:
+              cpu: 50m
+              memory: 10Mi
+          envFrom:
+            - configMapRef:
+                name: wes-identity
+          volumeMounts:
+            - name: sys
+              # TODO: see if we can figure out a way to do /host/sys and modify code for that path
+              mountPath: /sys
+              mountPropagation: HostToContainer
+              readOnly: false
+          # TODO: liveness probe to ensure its working
+          # livenessProbe:
+          #   exec:
+          #     command:
+          #       - "/bin/sh"
+          #       - "-c"
+          #       - "gpspipe -n20 -w wes-gps-server | grep -q -m1 TPV"
+          #   timeoutSeconds: 10
+          #   initialDelaySeconds: 30
+          #   periodSeconds: 30
+          #   successThreshold: 1
+          #   failureThreshold: 3
+      volumes:
+        - name: sys
+          hostPath:
+            path: /sys
