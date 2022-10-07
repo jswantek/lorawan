@@ -1,0 +1,63 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: wes-chirpstack
+spec:
+  selector:
+    app: wes-chirpstack
+  ports:
+    - name: gateway
+      protocol: UDP
+      port: 1700
+      targetPort: 1700
+# TODO: put all these chirpstack stuff in a single yaml
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wes-chirpstack
+spec:
+  selector:
+    matchLabels:
+      app: wes-chirpstack
+  template:
+    metadata:
+      labels:
+        app: wes-chirpstack
+    spec:
+      priorityClassName: wes-high-priority
+      containers:
+        - image: chirpstack/chirpstack-gateway-bridge:3
+          name: wes-chirpstack-gateway
+          ports:
+            - containerPort: 1700
+              
+          resources:
+            # TODO: analyze resource usage
+            limits:
+              cpu: 500m
+              memory: 100Mi
+            requests:
+              cpu: 500m
+              memory: 100Mi
+          envFrom:
+            - configMapRef:
+                name: wes-identity
+          # TODO: liveness probe to ensure its working
+        - image: chirpstack/chirpstack-gateway-bridge:3
+          name: wes-chirpstack-gateway
+          ports:
+            - containerPort: 1700
+          resources:
+            # TODO: analyze resource usage
+            limits:
+              cpu: 500m
+              memory: 100Mi
+            requests:
+              cpu: 500m
+              memory: 100Mi
+          envFrom:
+            - configMapRef:
+                name: wes-identity
+          # TODO: liveness probe to ensure its working
+          

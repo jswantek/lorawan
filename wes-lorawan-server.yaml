@@ -37,12 +37,13 @@ spec:
           securityContext:
             privileged: true
           resources:
+            # TODO: analyze resource usage 
             limits:
-              cpu: 50m
-              memory: 10Mi
+              cpu: 500m
+              memory: 100Mi
             requests:
-              cpu: 50m
-              memory: 10Mi
+              cpu: 500m
+              memory: 100Mi
           envFrom:
             - configMapRef:
                 name: wes-identity

@@ -80,7 +80,7 @@ def mqtt_start(args):
     client = mqtt.Client("rak")
     logging.info(f"connecting [{args.rak_server}]...")
     client.connect(args.rak_server)
-    logging.info(f"subscribing [{args.rak_sub_path}]...")
+    logging.info(f"subscribing [{args.rak_subscribe_path}]...")
     client.subscribe(args.rak_subscribe_path)
     logging.info("waiting for callback...")
     client.on_message = mess
@@ -97,6 +97,8 @@ if __name__ == "__main__":
         default=False,
         help="enable dry-run mode where no messages will be broadcast to Beehive",
     )
+    # TODO: change default to wes-rabbitmq
+    # TOOD: add the port (default 1883)
     parser.add_argument(
         "--rak-server",
         default=os.getenv("RAK_SERVER_HOST", "127.0.0.1"),
