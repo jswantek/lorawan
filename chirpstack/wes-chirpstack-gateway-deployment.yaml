@@ -1,17 +1,3 @@
-# TODO: put all these chirpstack stuff in a single yaml
-apiVersion: v1
-kind: Service
-metadata:
-  name: wes-chirpstack-gateway-bridge
-spec:
-  selector:
-    app: wes-chirpstack-gateway-bridge
-  ports:
-    - name: gateway-bridge
-      port: 1700
-      targetPort: 1700
-      protocol: UDP
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -45,13 +31,12 @@ spec:
             - configMapRef:
                 name: wes-identity
           volumeMounts:
-            - name: gateway-config
-              mountPath: /etc/chirpstack-gateway-bridge/chirpstack-gateway-bridge.toml
+            - name: gateway-bridge-config-volume
+              mountPath: /etc/chirpstack-gateway-bridge
               readOnly: true
           # TODO: liveness probe to ensure its working
       volumes:
-        - name: gateway-config
+        - name: gateway-bridge-config-volume
           configMap:
-            name: gateway-cm
-            files:
-              - chirpstack-bridge-config.toml
+            name: gateway-bridge-config-cm
+            defaultMode: 0644

@@ -1,0 +1,13 @@
+# TODO: put all these chirpstack stuff in a single yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: wes-chirpstack-gateway-bridge
+spec:
+  selector:
+    app: wes-chirpstack-gateway-bridge
+  ports:
+    - name: gateway-bridge
+      port: 1700
+      targetPort: 1700
+      protocol: UDP
