@@ -2,7 +2,7 @@
 # Log level
 #
 # debug=5, info=4, warning=3, error=2, fatal=1, panic=0
-log_level=4
+log_level=5
 
 # Log to syslog.
 #
@@ -180,7 +180,7 @@ get_downlink_data_delay="100ms"
   # * RU864
   # * US915
   # * ISM2400  (LoRaWAN 2.4GHz: https://lora-developers.semtech.com/library/tech-papers-and-guides/physical-layer-proposal-2.4ghz)
-  name="EU868"
+  name="US915"
 
   # Enforce 400ms dwell time.
   #
@@ -568,7 +568,7 @@ get_downlink_data_delay="100ms"
     command_topic_template="gateway/{{ .GatewayID }}/command/{{ .CommandType }}"
 
     # MQTT server (e.g. scheme://host:port where scheme is tcp, ssl or ws)
-    server="tcp://localhost:1883"
+    server="tcp://wes-rabbitmq:1883"
 
     # Connect with the given username (optional)
     username=""
@@ -828,7 +828,7 @@ resolve_domain_suffix=".joineuis.lora-alliance.org"
   # Default server endpoint.
   #
   # This API is provided by ChirpStack Application Server.
-  server="http://localhost:8003"
+  server="http://wes-chirpstack-network-server:8003"
 
   # # Use the async API scheme.
   async=false

@@ -4,8 +4,13 @@ kind: Kustomization
 resources:
   - wes-chirpstack-gateway-service.yaml
   - wes-chirpstack-gateway-deployment.yaml
+  - wes-chirpstack-network-service.yaml
+  - wes-chirpstack-network-deployment.yaml
 
 configMapGenerator:
   - name: gateway-bridge-config-cm
     files:
       - chirpstack-gateway-bridge.toml
+  - name: network-server-config-cm
+    files:
+      - chirpstack-network-server.toml
