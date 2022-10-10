@@ -1,20 +1,4 @@
-apiVersion: v1
-kind: Service
-metadata:
-  name: wes-lorawan-server
-spec:
-  selector:
-    app: wes-lorawan-server
-  ports:
-    # - name: mqtt
-    #   protocol: UDP
-    #   port: 1700
-    #   targetPort: 1700
-    - name: webui
-      protocol: TCP
-      port: 8080
-      targetPort: 8080
----
+# TODO: rename to collector
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -32,12 +16,13 @@ spec:
       nodeSelector:
         resource.lorawan: "true"
       containers:
-        - image: 10.31.81.1:5000/local/lorawan:latest
-          name: wes-lorawan-server
+        - name: wes-lorawan-server
+          image: 10.31.81.1:5000/local/lorawan:latest
+          # TOOD: not sure if we need this, since we are mapping in /sys already
           securityContext:
             privileged: true
           resources:
-            # TODO: analyze resource usage 
+            # TODO: analyze resource usage
             limits:
               cpu: 500m
               memory: 100Mi

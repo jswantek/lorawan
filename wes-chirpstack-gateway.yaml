@@ -1,37 +1,38 @@
+# TODO: put all these chirpstack stuff in a single yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: wes-chirpstack
+  name: wes-chirpstack-gateway-bridge
 spec:
   selector:
-    app: wes-chirpstack
+    app: wes-chirpstack-gateway-bridge
   ports:
-    - name: gateway
-      protocol: UDP
+    - name: gateway-bridge
       port: 1700
       targetPort: 1700
-# TODO: put all these chirpstack stuff in a single yaml
+      protocol: UDP
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: wes-chirpstack
+  name: wes-chirpstack-gateway-bridge
 spec:
   selector:
     matchLabels:
-      app: wes-chirpstack
+      app: wes-chirpstack-gateway-bridge
   template:
     metadata:
       labels:
-        app: wes-chirpstack
+        app: wes-chirpstack-gateway-bridge
     spec:
+      # TODO: need to figure out if this class is right
       priorityClassName: wes-high-priority
       containers:
-        - image: chirpstack/chirpstack-gateway-bridge:3
-          name: wes-chirpstack-gateway
+        - name: wes-chirpstack-gateway
+          image: chirpstack/chirpstack-gateway-bridge:3
           ports:
             - containerPort: 1700
-              
+              protocol: UDP
           resources:
             # TODO: analyze resource usage
             limits:
@@ -43,21 +44,14 @@ spec:
           envFrom:
             - configMapRef:
                 name: wes-identity
+          volumeMounts:
+            - name: gateway-config
+              mountPath: /etc/chirpstack-gateway-bridge/chirpstack-gateway-bridge.toml
+              readOnly: true
           # TODO: liveness probe to ensure its working
-        - image: chirpstack/chirpstack-gateway-bridge:3
-          name: wes-chirpstack-gateway
-          ports:
-            - containerPort: 1700
-          resources:
-            # TODO: analyze resource usage
-            limits:
-              cpu: 500m
-              memory: 100Mi
-            requests:
-              cpu: 500m
-              memory: 100Mi
-          envFrom:
-            - configMapRef:
-                name: wes-identity
-          # TODO: liveness probe to ensure its working
-          
+      volumes:
+        - name: gateway-config
+          configMap:
+            name: gateway-cm
+            files:
+              - chirpstack-bridge-config.toml
