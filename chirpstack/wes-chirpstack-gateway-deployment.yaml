@@ -14,7 +14,7 @@ spec:
       # TODO: need to figure out if this class is right
       priorityClassName: wes-high-priority
       containers:
-        - name: wes-chirpstack-gateway
+        - name: wes-chirpstack-gateway-bridge
           image: chirpstack/chirpstack-gateway-bridge:3
           ports:
             - containerPort: 1700
