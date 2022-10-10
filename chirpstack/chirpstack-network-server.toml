@@ -828,7 +828,7 @@ resolve_domain_suffix=".joineuis.lora-alliance.org"
   # Default server endpoint.
   #
   # This API is provided by ChirpStack Application Server.
-  server="http://wes-chirpstack-network-server:8003"
+  server="http://wes-chirpstack-application-server:8003"
 
   # # Use the async API scheme.
   async=false

@@ -2,7 +2,7 @@
 # Log level
 #
 # debug=5, info=4, warning=3, error=2, fatal=1, panic=0
-log_level=4
+log_level=5
 
 # Log to syslog.
 #
@@ -249,7 +249,7 @@ id="6d5db27e-4ce2-4b2b-b5d7-91f069397978"
   retain_events=false
 
   # MQTT server (e.g. scheme://host:port where scheme is tcp, ssl or ws)
-  server="tcp://localhost:1883"
+  server="tcp://wes-rabbitmq:1883"
 
   # Connect with the given username (optional)
   username=""
@@ -456,7 +456,7 @@ id="6d5db27e-4ce2-4b2b-b5d7-91f069397978"
   # this to the host:ip on which ChirpStack Network Server can reach ChirpStack Application Server.
   # The port must be equal to the port configured by the 'bind' flag
   # above.
-  public_host="localhost:8001"
+  public_host="http://wes-chirpstack-application-server:8001"
 
 
   # Settings for the "external api"

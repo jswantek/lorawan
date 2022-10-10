@@ -1,0 +1,21 @@
+# TODO: put all these chirpstack stuff in a single yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: wes-chirpstack-application-server
+spec:
+  selector:
+    app: wes-chirpstack-application-server
+  ports:
+    - name: application-server-api
+      port: 8001
+      targetPort: 8001
+      protocol: TCP
+    - name: application-server-join
+      port: 8003
+      targetPort: 8003
+      protocol: TCP
+    - name: application-server-web
+      port: 8080
+      targetPort: 8080
+      protocol: TCP

@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wes-chirpstack-application-server
+spec:
+  selector:
+    matchLabels:
+      app: wes-chirpstack-application-server
+  template:
+    metadata:
+      labels:
+        app: wes-chirpstack-application-server
+    spec:
+      # TODO: need to figure out if this class is right
+      priorityClassName: wes-high-priority
+      containers:
+        - name: wes-chirpstack-application-server
+          image: chirpstack/chirpstack-application-server:3
+          ports:
+            - containerPort: 8001
+              protocol: TCP
+            - containerPort: 8003
+              protocol: TCP
+            - containerPort: 8080
+              protocol: TCP
+          resources:
+            # TODO: analyze resource usage
+            limits:
+              cpu: 500m
+              memory: 100Mi
+            requests:
+              cpu: 500m
+              memory: 100Mi
+          envFrom:
+            - configMapRef:
+                name: wes-identity
+          volumeMounts:
+            - name: application-server-config-volume
+              mountPath: /etc/chirpstack-application-server
+              readOnly: true
+          # TODO: liveness probe to ensure its working
+      volumes:
+        - name: application-server-config-volume
+          configMap:
+            name: application-server-config-cm
+            defaultMode: 0644

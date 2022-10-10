@@ -6,6 +6,8 @@ resources:
   - wes-chirpstack-gateway-deployment.yaml
   - wes-chirpstack-network-service.yaml
   - wes-chirpstack-network-deployment.yaml
+  - wes-chirpstack-application-service.yaml
+  - wes-chirpstack-application-deployment.yaml
 
 configMapGenerator:
   - name: gateway-bridge-config-cm
@@ -14,3 +16,6 @@ configMapGenerator:
   - name: network-server-config-cm
     files:
       - chirpstack-network-server.toml
+  - name: application-server-config-cm
+    files:
+      - chirpstack-application-server.toml
