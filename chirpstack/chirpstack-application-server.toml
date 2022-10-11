@@ -78,7 +78,7 @@ max_idle_connections=2
 #
 # Set multiple addresses when connecting to a cluster.
 servers=[
-  "http://wes-chirpstack-redis:6379",
+  "redis://wes-chirpstack-redis:6379",
 ]
 
 # Password.
