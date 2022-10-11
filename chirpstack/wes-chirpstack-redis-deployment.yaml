@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wes-chirpstack-redis
+spec:
+  selector:
+    matchLabels:
+      app: wes-chirpstack-redis
+  template:
+    metadata:
+      labels:
+        app: wes-chirpstack-redis
+    spec:
+      # TODO: need to figure out if this class is right
+      priorityClassName: wes-high-priority
+      # TODO: add note about how we want this to ensure volume is available
+      nodeSelector:
+        node-role.kubernetes.io/master: "true"
+      containers:
+        - name: wes-chirpstack-redis
+          image: redis:5-alpine
+          ports:
+            - containerPort: 6379
+          resources:
+            # TODO: analyze resource usage
+            limits:
+              cpu: 500m
+              memory: 100Mi
+            requests:
+              cpu: 500m
+              memory: 100Mi
+          envFrom:
+            - configMapRef:
+                name: wes-identity
+          volumeMounts:
+            - mountPath: /data
+              name: chirpstack-redis-data-volume
+          # TODO: liveness probe to ensure its working
+      volumes:
+        - name: chirpstack-redis-data-volume
+          persistentVolumeClaim:
+            claimName: wes-chirpstack-redis-data

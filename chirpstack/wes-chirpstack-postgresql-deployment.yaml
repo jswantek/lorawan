@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wes-chirpstack-postgresql
+spec:
+  selector:
+    matchLabels:
+      app: wes-chirpstack-postgresql
+  template:
+    metadata:
+      labels:
+        app: wes-chirpstack-postgresql
+    spec:
+      # TODO: need to figure out if this class is right
+      priorityClassName: wes-high-priority
+      # TODO: add note about how we want this to ensure volume is available
+      nodeSelector:
+        node-role.kubernetes.io/master: "true"
+      containers:
+        - name: wes-chirpstack-postgresql
+          image: postgres:alpine
+          ports:
+            - containerPort: 5432
+          resources:
+            # TODO: analyze resource usage
+            limits:
+              cpu: 500m
+              memory: 100Mi
+            requests:
+              cpu: 500m
+              memory: 100Mi
+          env:
+            - name: POSTGRES_HOST_AUTH_METHOD
+              value: trust
+          envFrom:
+            - configMapRef:
+                name: wes-identity
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: chirpstack-postgresql-data-volume
+            - mountPath: /docker-entrypoint-initdb.d
+              name: chirpstack-postgresql-configmap-volume
+          # TODO: liveness probe to ensure its working
+      volumes:
+        - name: chirpstack-postgresql-data-volume
+          persistentVolumeClaim:
+            claimName: wes-chirpstack-postgresql-data
+        - name: chirpstack-postgresql-configmap-volume
+          configMap:
+            name: wes-chirpstack-postgresql-configmap

@@ -8,6 +8,13 @@ resources:
   - wes-chirpstack-network-deployment.yaml
   - wes-chirpstack-application-service.yaml
   - wes-chirpstack-application-deployment.yaml
+  - wes-chirpstack-redis-service.yaml
+  - wes-chirpstack-redis-deployment.yaml
+  - wes-chirpstack-redis-volume.yaml
+  - wes-chirpstack-postgresql-service.yaml
+  - wes-chirpstack-postgresql-deployment.yaml
+  - wes-chirpstack-postgresql-volume.yaml
+  - wes-chirpstack-postgresql-configmap.yaml
 
 configMapGenerator:
   - name: gateway-bridge-config-cm
