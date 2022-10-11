@@ -474,7 +474,7 @@ id="6d5db27e-4ce2-4b2b-b5d7-91f069397978"
 
   # JWT secret used for api authentication / authorization
   # You could generate this by executing 'openssl rand -base64 32' for example
-  jwt_secret=""
+  jwt_secret="sPQT3pZfR191Y9lJP9CreqbThIvjGlR8YYMNmav9hkI="
 
   # Allow origin header (CORS).
   #
