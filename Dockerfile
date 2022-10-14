@@ -15,6 +15,9 @@ ENV MODEL="RAK7248"
 # TOOD: need to be sure we want to limit this here, this is what was done in by Larry
 ENV BAND="US_902_928"
 
+# set to a pre-defined EUI to ensure compatibility with downstream services
+ENV GATEWAY_EUI="D2CE19FFFEC9D449"
+
 # TODO: i think this is what will re-broadcast the data to our local server
 ## for upload to beehive (may want to specicify a port here too)
 ENV SERVER_HOST="wes-chirpstack-gateway-bridge"
