@@ -519,7 +519,7 @@ get_downlink_data_delay="100ms"
     #  * amqp
     #  * gcp_pub_sub
     #  * azure_iot_hub
-    type="mqtt"
+    type="amqp"
 
     # Multi-downlink feature flag.
     #
@@ -568,7 +568,7 @@ get_downlink_data_delay="100ms"
     command_topic_template="gateway/{{ .GatewayID }}/command/{{ .CommandType }}"
 
     # MQTT server (e.g. scheme://host:port where scheme is tcp, ssl or ws)
-    server="tcp://wes-rabbitmq:1883"
+    server=""
 
     # Connect with the given username (optional)
     username=""
@@ -628,7 +628,7 @@ get_downlink_data_delay="100ms"
     #
     # See for a specification of all the possible options:
     # https://www.rabbitmq.com/uri-spec.html
-    url="amqp://guest:guest@localhost:5672"
+    url="amqp://service:service@wes-rabbitmq:5672"
 
     # Event queue name.
     #

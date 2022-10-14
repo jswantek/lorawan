@@ -230,7 +230,7 @@ id="6d5db27e-4ce2-4b2b-b5d7-91f069397978"
   # * gcp_pub_sub       - Google Cloud Pub/Sub
   # * kafka             - Kafka distributed streaming platform
   # * postgresql        - PostgreSQL database
-  enabled=["mqtt"]
+  enabled=["amqp"]
 
 
   # MQTT integration backend.
@@ -249,7 +249,7 @@ id="6d5db27e-4ce2-4b2b-b5d7-91f069397978"
   retain_events=false
 
   # MQTT server (e.g. scheme://host:port where scheme is tcp, ssl or ws)
-  server="tcp://wes-rabbitmq:1883"
+  server=""
 
   # Connect with the given username (optional)
   username=""
@@ -321,7 +321,7 @@ id="6d5db27e-4ce2-4b2b-b5d7-91f069397978"
   #
   # See for a specification of all the possible options:
   # https://www.rabbitmq.com/uri-spec.html
-  url="amqp://guest:guest@localhost:5672"
+  url="amqp://service:service@wes-rabbitmq:5672"
 
   # Event routing key template.
   #

@@ -252,10 +252,10 @@ marshaler="protobuf"
     ]
 
     # Connect with the given username (optional)
-    username="admin"
+    username=""
 
     # Connect with the given password (optional)
-    password="admin"
+    password=""
 
     # Quality of service level
     #
