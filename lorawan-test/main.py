@@ -33,6 +33,7 @@ def mess(client, userdata, message):
     data = (
         "Message received: " + message.payload.decode("utf-8") + " with topic " + str(message.topic)
     )
+    logging.info(data)
     tmp_dict = json.loads(message.payload.decode("utf-8"))
     try:
         bytes_b64 = tmp_dict["data"].encode("utf-8")

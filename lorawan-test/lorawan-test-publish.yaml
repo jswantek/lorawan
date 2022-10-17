@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lorawan-test-publish
+spec:
+  selector:
+    matchLabels:
+      app: lorawan-test-publish
+  template:
+    metadata:
+      labels:
+        app: lorawan-test-publish
+    spec:
+      priorityClassName: wes-high-priority
+      containers:
+        - name: lorawan-test-publish
+          image: 10.31.81.1:5000/local/lorawan-test:latest
+          resources:
+            # TODO: analyze resource usage
+            limits:
+              cpu: 500m
+              memory: 100Mi
+            requests:
+              cpu: 500m
+              memory: 100Mi
+          envFrom:
+            - configMapRef:
+                name: wes-identity
+          env:
+            - name: RAK_SERVER_HOST
+              value: "wes-rabbitmq"
+            - name: RAK_SUBSCRIBE_PATH
+              value: "application/2/device/#"
