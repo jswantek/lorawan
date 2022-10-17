@@ -32,6 +32,17 @@ spec:
           envFrom:
             - configMapRef:
                 name: wes-identity
+          env:
+            - name: MODEL
+              value: "RAK7248"
+            - name: BAND
+              value: "US_902_928"
+            - name: GATEWAY_EUI
+              value: "D2CE19FFFEC9D449"
+            - name: SERVER_HOST
+              value: "wes-chirpstack-gateway-bridge"
+            - name: SERVER_PORT
+              value: "1700"
           volumeMounts:
             - name: sys
               # TODO: see if we can figure out a way to do /host/sys and modify code for that path
