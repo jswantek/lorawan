@@ -27,7 +27,9 @@ spec:
             - configMapRef:
                 name: wes-identity
           env:
-            - name: RAK_SERVER_HOST
+            - name: MQTT_SERVER_HOST
               value: "wes-rabbitmq"
-            - name: RAK_SUBSCRIBE_PATH
+            - name: MQTT_SERVER_PORT
+              value: "1883"
+            - name: MQTT_SUBSCRIBE_TOPIC
               value: "application/2/device/#"

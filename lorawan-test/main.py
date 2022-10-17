@@ -78,11 +78,11 @@ def mess(client, userdata, message):
 
 
 def mqtt_start(args):
-    client = mqtt.Client("rak")
-    logging.info(f"connecting [{args.rak_server}]...")
-    client.connect(args.rak_server)
-    logging.info(f"subscribing [{args.rak_subscribe_path}]...")
-    client.subscribe(args.rak_subscribe_path)
+    client = mqtt.Client("lorawan-test")
+    logging.info(f"connecting [{args.mqtt_server_ip}:{args.mqtt_server_port}]...")
+    client.connect(host=args.mqtt_server_ip, port=args.mqtt_server_port, bind_address="0.0.0.0")
+    logging.info(f"subscribing [{args.mqtt_subscribe_topic}]...")
+    client.subscribe(args.mqtt_subscribe_topic)
     logging.info("waiting for callback...")
     client.on_message = mess
     client.loop_forever()
@@ -98,17 +98,21 @@ if __name__ == "__main__":
         default=False,
         help="enable dry-run mode where no messages will be broadcast to Beehive",
     )
-    # TODO: change default to wes-rabbitmq
-    # TOOD: add the port (default 1883)
     parser.add_argument(
-        "--rak-server",
-        default=os.getenv("RAK_SERVER_HOST", "127.0.0.1"),
-        help="IP address of RAK server",
+        "--mqtt-server-ip",
+        default=os.getenv("MQTT_SERVER_HOST", "127.0.0.1"),
+        help="MQTT server IP address",
     )
     parser.add_argument(
-        "--rak-subscribe-path",
-        default=os.getenv("RAK_SUBSCRIBE_PATH", "application/2/device/#"),
-        help="RAK subscribe path",
+        "--mqtt-server-port",
+        default=os.getenv("MQTT_SERVER_PORT", "1883"),
+        help="MQTT server port",
+        type=int,
+    )
+    parser.add_argument(
+        "--mqtt-subscribe-topic",
+        default=os.getenv("MQTT_SUBSCRIBE_TOPIC", "application/2/device/#"),
+        help="MQTT subscribe topic",
     )
     args = parser.parse_args()
 
