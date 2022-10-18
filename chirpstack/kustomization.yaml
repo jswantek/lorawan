@@ -4,10 +4,8 @@ kind: Kustomization
 resources:
   - wes-chirpstack-gateway-service.yaml
   - wes-chirpstack-gateway-deployment.yaml
-  - wes-chirpstack-network-service.yaml
-  - wes-chirpstack-network-deployment.yaml
-  - wes-chirpstack-application-service.yaml
-  - wes-chirpstack-application-deployment.yaml
+  - wes-chirpstack-server-service.yaml
+  - wes-chirpstack-server-deployment.yaml
   - wes-chirpstack-redis-service.yaml
   - wes-chirpstack-redis-deployment.yaml
   - wes-chirpstack-redis-volume.yaml
@@ -17,12 +15,9 @@ resources:
   - wes-chirpstack-postgresql-configmap.yaml
 
 configMapGenerator:
-  - name: gateway-bridge-config-cm
+  - name: chirpstack-gateway-bridge-config-cm
     files:
       - chirpstack-gateway-bridge.toml
-  - name: network-server-config-cm
+  - name: chirpstack-server-config-cm
     files:
-      - chirpstack-network-server.toml
-  - name: application-server-config-cm
-    files:
-      - chirpstack-application-server.toml
+      - chirpstack.toml

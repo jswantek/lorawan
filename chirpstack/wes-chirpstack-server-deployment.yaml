@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wes-chirpstack-server
+spec:
+  selector:
+    matchLabels:
+      app: wes-chirpstack-server
+  template:
+    metadata:
+      labels:
+        app: wes-chirpstack-server
+    spec:
+      # TODO: need to figure out if this class is right
+      priorityClassName: wes-high-priority
+      containers:
+        - name: wes-chirpstack-server
+          image: chirpstack/chirpstack:4
+          command: ["chirpstack"]
+          args: ["--config-dir", "/etc/chirpstack"]
+          ports:
+            - containerPort: 8080
+            - containerPort: 9100
+          resources:
+            # TODO: analyze resource usage
+            limits:
+              cpu: 100m
+              memory: 100Mi
+            requests:
+              cpu: 50m
+              memory: 50Mi
+          envFrom:
+            - configMapRef:
+                name: wes-identity
+          env:
+            - name: POSTGRESQL_HOST
+              value: "wes-chirpstack-postgresql"
+            - name: REDIS_HOST
+              value: "wes-chirpstack-redis:6379"
+            - name: MQTT_BROKER_HOST
+              value: "wes-rabbitmq"
+          volumeMounts:
+            - name: server-config-volume
+              mountPath: /etc/chirpstack/chirpstack.toml
+              subPath: chirpstack.toml
+              readOnly: true
+          # TODO: liveness probe to ensure its working
+      volumes:
+        - name: server-config-volume
+          configMap:
+            name: chirpstack-server-config-cm
+            defaultMode: 0644

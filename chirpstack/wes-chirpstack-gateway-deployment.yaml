@@ -15,7 +15,7 @@ spec:
       priorityClassName: wes-high-priority
       containers:
         - name: wes-chirpstack-gateway-bridge
-          image: chirpstack/chirpstack-gateway-bridge:3
+          image: chirpstack/chirpstack-gateway-bridge:4
           ports:
             - containerPort: 1700
               protocol: UDP
@@ -38,5 +38,5 @@ spec:
       volumes:
         - name: gateway-bridge-config-volume
           configMap:
-            name: gateway-bridge-config-cm
+            name: chirpstack-gateway-bridge-config-cm
             defaultMode: 0644
