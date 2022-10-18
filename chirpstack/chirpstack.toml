@@ -1,6 +1,12 @@
 [logging]
 level="debug"
 
+[postgresql]
+dsn="postgres://chirpstack:chirpstack@$POSTGRESQL_HOST/chirpstack?sslmode=disable"
+
+[redis]
+servers=["redis://$REDIS_HOST/"]
+
 [network]
 net_id="000000"
 enabled_regions=["us915"]
@@ -14,6 +20,11 @@ secret="sPQT3pZfR191Y9lJP9CreqbThIvjGlR8YYMNmav9hkI="
 # /metrics - Returns metrics which can be scraped by Prometheus.
 bind="0.0.0.0:9100"
 
+[integration]
+enabled = ["mqtt"]
+
 [integration.mqtt]
+server="tcp://$MQTT_BROKER_HOST:1883/"
+json=true
 username="$MQTT_BROKER_USER"
 password="$MQTT_BROKER_PASSWORD"
