@@ -3,16 +3,7 @@ level="debug"
 
 [network]
 net_id="000000"
-enabled_regions=[
-    "us915_0",
-    "us915_1",
-    "us915_2",
-    "us915_3",
-    "us915_4",
-    "us915_5",
-    "us915_6",
-    "us915_7",
-]
+enabled_regions=["us915"]
 
 [api]
 bind="0.0.0.0:8080"
@@ -22,3 +13,7 @@ secret="sPQT3pZfR191Y9lJP9CreqbThIvjGlR8YYMNmav9hkI="
 # /health  - Returns 200 in case the healthchecks have passed.
 # /metrics - Returns metrics which can be scraped by Prometheus.
 bind="0.0.0.0:9100"
+
+[integration.mqtt]
+username="$MQTT_BROKER_USER"
+password="$MQTT_BROKER_PASSWORD"

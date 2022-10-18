@@ -17,7 +17,7 @@ spec:
         - name: wes-chirpstack-server
           image: chirpstack/chirpstack:4
           command: ["chirpstack"]
-          args: ["--config-dir", "/etc/chirpstack"]
+          args: ["--config-dir", "/etc/chirpstack-waggle"]
           ports:
             - containerPort: 8080
             - containerPort: 9100
@@ -39,10 +39,13 @@ spec:
               value: "wes-chirpstack-redis:6379"
             - name: MQTT_BROKER_HOST
               value: "wes-rabbitmq"
+            - name: MQTT_BROKER_USER
+              value: "service"
+            - name: MQTT_BROKER_PASSWORD
+              value: "service"
           volumeMounts:
             - name: server-config-volume
-              mountPath: /etc/chirpstack/chirpstack.toml
-              subPath: chirpstack.toml
+              mountPath: /etc/chirpstack-waggle
               readOnly: true
           # TODO: liveness probe to ensure its working
       volumes:

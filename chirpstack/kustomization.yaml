@@ -21,3 +21,4 @@ configMapGenerator:
   - name: chirpstack-server-config-cm
     files:
       - chirpstack.toml
+      - region_us915.toml
