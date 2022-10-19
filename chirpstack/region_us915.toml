@@ -8,7 +8,7 @@ enabled="mqtt"
 [regions.gateway.backend.mqtt]
 event_topic="us915/gateway/+/event/+"
 command_topic="us915/gateway/{{ gateway_id }}/command/{{ command }}"
-server="tcp://$MQTT_BROKER_HOST:1883"
+server="tcp://$MQTT_BROKER_HOST:$MQTT_BROKER_HOST_PORT"
 username="$MQTT_BROKER_USER"
 password="$MQTT_BROKER_PASSWORD"
 

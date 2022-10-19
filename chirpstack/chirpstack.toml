@@ -12,19 +12,19 @@ net_id="000000"
 enabled_regions=["us915"]
 
 [api]
-bind="0.0.0.0:8080"
+bind="0.0.0.0:$WEB_API_PORT"
 secret="sPQT3pZfR191Y9lJP9CreqbThIvjGlR8YYMNmav9hkI="
 
 [monitoring]
 # /health  - Returns 200 in case the healthchecks have passed.
 # /metrics - Returns metrics which can be scraped by Prometheus.
-bind="0.0.0.0:9100"
+bind="0.0.0.0:$HEALTH_PORT"
 
 [integration]
 enabled = ["mqtt"]
 
 [integration.mqtt]
-server="tcp://$MQTT_BROKER_HOST:1883/"
+server="tcp://$MQTT_BROKER_HOST:$MQTT_BROKER_HOST_PORT/"
 json=true
 username="$MQTT_BROKER_USER"
 password="$MQTT_BROKER_PASSWORD"

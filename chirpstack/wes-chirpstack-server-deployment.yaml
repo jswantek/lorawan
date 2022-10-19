@@ -39,10 +39,16 @@ spec:
               value: "wes-chirpstack-redis:6379"
             - name: MQTT_BROKER_HOST
               value: "wes-rabbitmq"
+            - name: MQTT_BROKER_HOST_PORT
+              value: "1883"
             - name: MQTT_BROKER_USER
               value: "service"
             - name: MQTT_BROKER_PASSWORD
               value: "service"
+            - name: WEB_API_PORT
+              value: "8080"
+            - name: HEALTH_PORT
+              value: "9100"
           volumeMounts:
             - name: server-config-volume
               mountPath: /etc/chirpstack-waggle
