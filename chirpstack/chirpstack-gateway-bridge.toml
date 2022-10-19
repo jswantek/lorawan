@@ -11,6 +11,11 @@ region="US915"
 #frequency_min=863000000
 #frequency_max=870000000
 
+[integration.mqtt]
+event_topic_template="us915/gateway/{{ .GatewayID }}/event/{{ .EventType }}"
+state_topic_template="us915/gateway/{{ .GatewayID }}/state/{{ .StateType }}"
+command_topic_template="us915/gateway/{{ .GatewayID }}/command/#"
+
 [integration.mqtt.auth.generic]
 servers=["tcp://wes-rabbitmq:1883"]
 username=""
